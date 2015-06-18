@@ -6,6 +6,8 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.net.UnknownHostException;
+
 /**
  * Created by Szmytek on 2015-06-18.
  */
@@ -47,9 +49,12 @@ public class WebServiceCall {
             httpTransport.call(SOAP_ACTION, envelope);
             response = envelope.getResponse();
         }
-        catch (Exception exception)
+        catch (UnknownHostException uhEx)
         {
-            response=exception.toString();
+            response="No internet connection";
+        }
+        catch (Exception e){
+            response=e.getMessage();
         }
         return response.toString();
     }
