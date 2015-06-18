@@ -1,9 +1,14 @@
 package com.szmytek.srir_webservice_skos_miner;
 
+import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -12,6 +17,32 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final Activity activity = this;
+        final Button button = (Button) findViewById(R.id.button);
+        final EditText name = (EditText) findViewById(R.id.editText);
+        final EditText surname = (EditText) findViewById(R.id.editText2);
+        final TextView tv = (TextView) findViewById(R.id.textView3);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                new Thread(new Runnable() {
+                    public void run() {
+                        WebServiceCall wsc = new WebServiceCall();
+                        final String result = wsc.Call(name.getText().toString(), surname.getText().toString());
+                        final String[] split = result.split(";");
+                        activity.runOnUiThread(new Runnable() {
+                            public void run() {
+                                tv.setText("");
+                                for(String s : split){
+                                    tv.append(s +"\n");
+                                }
+                            }
+                        });
+                    }
+                }).start();
+
+            }
+        });
     }
 
 
