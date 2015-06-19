@@ -28,6 +28,11 @@ public class MainActivity extends Activity {
     EditText surname;
     TextView tv;
     @Override
+    //! This is initial method for main activity
+        /*!
+          \param savedInstanceState Bundle Bundle object
+          \sa onCreate()
+        */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -38,6 +43,11 @@ public class MainActivity extends Activity {
         tv = (TextView) findViewById(R.id.textView3);
     }
 
+    //! Button click, after click it ask first server for person information if failed ask second server
+        /*!
+          \param view View View object
+          \sa getInfoButtonClick()
+        */
     public void getInfoButtonClick(View view) {
         final Date d1 = new Date();
         if(name.getText().toString().equals("") || surname.getText().toString().equals("")){
